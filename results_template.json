@@ -1,0 +1,25 @@
+{
+  "_note": "Fill every null with your own measured values (mean and SD or 95% CI exactly as reported in Tables 21-23). The script refuses to run while any null is left.",
+  "table21": {
+    "strategies": ["Class weights only", "Random oversampling", "SMOTE (proposed)", "Borderline-SMOTE"],
+    "macro_f1":  [[null, null], [null, null], [null, null], [null, null]],
+    "slowloris": [[null, null, null], [null, null, null], [null, null, null], [null, null, null]],
+    "botnet_ares": [[null, null, null], [null, null, null], [null, null, null], [null, null, null]],
+    "fpr": [[null, null], [null, null], [null, null], [null, null]],
+    "_format": "macro_f1 / fpr = [mean, SD]; slowloris / botnet_ares = [mean, CI_low, CI_high]"
+  },
+  "table22": {
+    "components": ["CNN (IG)", "BiLSTM (IG)", "LightGBM (TreeSHAP)", "DWF gate (H permutation)", "Ensemble"],
+    "rank_stability_tau": [[null, null], [null, null], [null, null], [null, null], [null, null]],
+    "baseline_sensitivity_tau": [[null, null], [null, null], null, null, [null, null]],
+    "completeness_error_pct": [[null, null], [null, null], null, null, null],
+    "_format": "[mean, SD]; use null where the table says n/a"
+  },
+  "table23": {
+    "configs": ["Raw-only HFR", "Raw-only HFR", "Without WSN-specific components", "Tier 1 constrained (int8 GBDT)", "Simulated LEACH rotation"],
+    "datasets": ["NF-ToN-IoT-v2", "WSN-DS", "WSN-DS", "WSN-DS", "WSN-DS"],
+    "macro_f1": [[null, null], [null, null], [null, null], [null, null], [null, null]],
+    "delta_macro_f1_pp": [[null, null], [null, null], [null, null], [null, null], [null, null]],
+    "_format": "[mean, SD]; delta = difference to the full HFR / full model on the same dataset"
+  }
+}

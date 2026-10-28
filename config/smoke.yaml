@@ -1,0 +1,30 @@
+# Tiny profile for testing the code path ONLY. Never use these numbers in the paper.
+seeds: [0, 1, 2]
+out_dir: runs_smoke
+window: 20
+bins: 10
+n_hfr: 28
+block_size: 100
+splits: {test: 0.2, val_of_train: 0.1}
+imputer_iters: 3
+smote: {enabled: true, cap_per_class: 400, k: 3}
+fpr_mode: macro_ovr
+nn: {epochs: 2, batch: 256, patience: 2, lr: 0.003}
+budgets: {lgbm: 3, dwf: 12, gate: 2, stack: 3, xgb_cat: 2}
+tune_rows: {lgbm: 5000, fusion: 5000}
+k_regimes: 5
+hfr_overrides: {}
+datasets:
+  ciciot2023:  {path: data/smoke_ciciot2023.csv,  label_col: label, session_col: sess, order_col: t, benign_label: BENIGN, packet_size_feature: pkt_len}
+  edge_iiotset: {path: data/smoke_edge_iiotset.csv, label_col: label, session_col: sess, order_col: t, benign_label: BENIGN, packet_size_feature: pkt_len}
+  nf_ton_iot_v2: {path: data/smoke_nf_ton_iot_v2.csv, label_col: label, session_col: sess, order_col: t, benign_label: BENIGN, packet_size_feature: pkt_len}
+  wsn_ds:      {path: data/smoke_wsn_ds.csv,      label_col: label, session_col: sess, order_col: t, benign_label: BENIGN, packet_size_feature: pkt_len}
+dataset_order: [ciciot2023, edge_iiotset, nf_ton_iot_v2, wsn_ds]
+adversarial:
+  eps_grid: [0.05, 0.10]
+  report_eps: 0.10
+  pgd_steps: 3
+  n_eval: 500
+  query_budget: 50
+  controllable_regex: "(len|size|bytes|iat|inter|rate|duration|count|conn|pkts|packets)"
+  non_controllable_regex: "(flag|proto|lqi|hop|routing|rssi|port)"

@@ -1,0 +1,13 @@
+tensorflow>=2.16          # paper: 2.16 + CUDA 12.2 (tensorflow[and-cuda] for GPU)
+lightgbm>=4.2
+optuna>=3.5
+xgboost
+catboost
+imbalanced-learn
+scikit-learn
+scipy
+pandas
+pyarrow
+pyyaml
+lxml
+scapy                     # only for hai_dwf.replay

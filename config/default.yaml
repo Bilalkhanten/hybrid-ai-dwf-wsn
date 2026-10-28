@@ -1,0 +1,36 @@
+# HAI+DWF validation pipeline -- default configuration (values taken from the revised manuscript)
+seeds: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]      # master seeds s0 (N = 10 runs), Section 3.1
+out_dir: runs
+window: 20                                  # T, Section 3.7
+bins: 10                                    # histogram bins per HFR component (Section 3.7)
+n_hfr: 28
+block_size: 200                             # rows per split block when a dataset has no session column
+splits: {test: 0.20, val_of_train: 0.10}    # -> 72 % fitting / 8 % validation / 20 % test (Table A1)
+imputer_iters: 15                           # MICE
+smote: {enabled: true, cap_per_class: 20000, k: 5}   # raise cap_per_class if RAM allows
+fpr_mode: macro_ovr                         # macro_ovr | benign_vs_attack  (CONFIRM against the paper's definition)
+nn: {epochs: 120, batch: 1024, patience: 12, lr: 0.001}
+budgets:                                    # Optuna TPE trials (Sections 3.1, 3.9). Reduce ONLY for smoke tests.
+  lgbm: 300
+  dwf: 500
+  gate: 500
+  stack: 500
+  xgb_cat: 300
+tune_rows: {lgbm: 200000, fusion: 200000}   # row cap used while tuning (final refit/eval uses all rows)
+k_regimes: 5
+hfr_overrides: {}                           # optional per-dataset yaml with explicit 28-component spec
+datasets:
+  ciciot2023:  {path: data/ciciot2023.parquet,  label_col: label, session_col: null, order_col: null, benign_label: BENIGN, packet_size_feature: null}
+  edge_iiotset: {path: data/edge_iiotset.parquet, label_col: label, session_col: null, order_col: null, benign_label: Normal, packet_size_feature: null}
+  nf_ton_iot_v2: {path: data/nf_ton_iot_v2.parquet, label_col: label, session_col: null, order_col: null, benign_label: Benign, packet_size_feature: null}
+  wsn_ds:      {path: data/wsn_ds.parquet,      label_col: label, session_col: null, order_col: null, benign_label: Normal, packet_size_feature: null}
+dataset_order: [ciciot2023, edge_iiotset, nf_ton_iot_v2, wsn_ds]
+adversarial:
+  eps_grid: [0.02, 0.05, 0.10]
+  report_eps: 0.10
+  pgd_steps: 20
+  n_eval: 20000
+  query_budget: 2000
+  # controllable HFR components are listed by regex; everything else is frozen (Stage 1, Section 3.11)
+  controllable_regex: "(len|size|bytes|iat|inter|rate|duration|count|conn|pkts|packets)"
+  non_controllable_regex: "(flag|proto|lqi|hop|routing|rssi|port)"

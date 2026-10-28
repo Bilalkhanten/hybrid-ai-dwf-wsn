@@ -1,0 +1,87 @@
+adversarial:
+  controllable_regex: (len|size|bytes|iat|inter|rate|duration|count|conn|pkts|packets)
+  eps_grid:
+  - 0.05
+  - 0.1
+  n_eval: 500
+  non_controllable_regex: (flag|proto|lqi|hop|routing|rssi|port)
+  pgd_steps: 3
+  query_budget: 50
+  report_eps: 0.1
+bins: 10
+block_size: 100
+budgets:
+  dwf: 12
+  gate: 2
+  lgbm: 3
+  stack: 3
+  xgb_cat: 2
+dataset_order:
+- ciciot2023
+- edge_iiotset
+- nf_ton_iot_v2
+- wsn_ds
+- edge_rare
+datasets:
+  ciciot2023:
+    benign_label: BENIGN
+    label_col: label
+    order_col: t
+    packet_size_feature: pkt_len
+    path: data/smoke_ciciot2023.csv
+    session_col: sess
+  edge_iiotset:
+    benign_label: BENIGN
+    label_col: label
+    order_col: t
+    packet_size_feature: pkt_len
+    path: data/smoke_edge_iiotset.csv
+    session_col: sess
+  edge_rare:
+    benign_label: BENIGN
+    label_col: label
+    order_col: t
+    packet_size_feature: pkt_len
+    path: data/smoke_edge_rare.csv
+    session_col: sess
+  nf_ton_iot_v2:
+    benign_label: BENIGN
+    label_col: label
+    order_col: t
+    packet_size_feature: pkt_len
+    path: data/smoke_nf_ton_iot_v2.csv
+    session_col: sess
+  wsn_ds:
+    benign_label: BENIGN
+    label_col: label
+    order_col: t
+    packet_size_feature: pkt_len
+    path: data/smoke_wsn_ds.csv
+    session_col: sess
+fpr_mode: macro_ovr
+hfr_overrides: {}
+imputer_iters: 3
+k_regimes: 5
+n_hfr: 28
+nn:
+  batch: 256
+  epochs: 2
+  lr: 0.003
+  patience: 2
+out_dir: runs_t21_ros
+resampling: ros
+seeds:
+- 0
+- 1
+- 2
+smote:
+  cap_per_class: 1200
+  enabled: true
+  k: 3
+splits:
+  test: 0.2
+  val_of_train: 0.1
+tune_rows:
+  fusion: 5000
+  lgbm: 5000
+window: 20

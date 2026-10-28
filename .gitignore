@@ -218,3 +218,16 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- project-specific ---
+# datasets you supply and the synthetic smoke data (tests/make_synthetic.py data)
+data/
+# outputs of the pipeline (run_all.py, hai_dwf.extra, run_ext.sh, run_t21.sh)
+runs/
+runs_smoke/
+runs_*/
+results/
+results_ext/
+*.progress
+# the manuscript (input and output of hai_dwf.fill_docx) is not part of the code repository
+*.docx
