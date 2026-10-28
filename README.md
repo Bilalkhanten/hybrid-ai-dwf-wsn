@@ -1,5 +1,7 @@
 # HAI+DWF: entropy-adaptive hybrid ensemble for intrusion detection in wireless sensor networks
 
+[![CI](https://github.com/Bilalkhanten/hybrid-ai-dwf-wsn/actions/workflows/ci.yml/badge.svg)](https://github.com/Bilalkhanten/hybrid-ai-dwf-wsn/actions/workflows/ci.yml)
+
 A CNN, a BiLSTM with temporal attention and a LightGBM model each classify network traffic features (the CNN and LightGBM use the
 latest time step, the BiLSTM a window of 20 steps). A **dynamic weighted fusion (DWF)** layer then combines their class
 posteriors, choosing the weights per window from the Shannon entropy of that window. This repository is the implementation: data handling, the models, the fusion layer and its ablations, transfer
